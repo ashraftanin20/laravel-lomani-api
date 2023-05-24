@@ -21,7 +21,7 @@ class ProductController extends Controller
         $query = DB::table('products')
         ->join('sellers', 'products.seller_id', '=', 'sellers.id')
         ->select('products.id', 'products.name', 'products.image', 'products.price', 'products.category', 'products.rating',
-                    'products.seller_id', 'sellers.name as seller_name');
+                    'products.num_reviews','products.seller_id', 'sellers.name as seller_name');
         if(!empty($name)){
             $query->where('name', 'like', '%'.$name.'%');
         }
@@ -57,7 +57,6 @@ class ProductController extends Controller
     }
 
     public function getProductList(Request $request) {
-        \Log::error($request);
         $products;
         if($request['is_admin']) {
             $products = DB::table('products')->select('products.*')->get();
